@@ -23,21 +23,21 @@ async function onMessage(msg) {
         return;
     }
     if (msg.self()) {
-        console.log('Self content: ', content);
-        if (content == '功能') {
-            // // 能坚挺到发送，但是客户端看不到
-            // await msg.to().say('功能列表：\n - 开启自动回复\n - 关闭自动回复\n - 功能');
-        } else if (content == '开启自动回复') {
-            autoReply = true;
-        } else if (content == '关闭自动回复') {
-            autoReply = false;
-        } else {
-            console.log('Self message, skip');
-        }
+        // console.log('Self content: ', content);
+        // if (content == '功能') {
+        //     // // 能坚挺到发送，但是客户端看不到
+        //     // await msg.to().say('功能列表：\n - 开启自动回复\n - 关闭自动回复\n - 功能');
+        // } else if (content == '开启自动回复') {
+        //     autoReply = true;
+        // } else if (content == '关闭自动回复') {
+        //     autoReply = false;
+        // } else {
+        //     console.log('Self message, skip');
+        // }
         return;
     }
 
-    console.log('onMessage: ', msg);
+    // console.log('onMessage: ', msg);
 
     const contact = msg.talker();
     const receiver = msg.to();
@@ -49,8 +49,11 @@ async function onMessage(msg) {
         const talker = await contact.name()
         console.log(`Group name: ${topic}; talker: ${talker}; content: ${content}`);
 
+        const mentionSelf = await msg.mentionSelf();
         const pattern = RegExp(`^@${receiver.name()}\\s+[\\s]*`);
-        if (await msg.mentionSelf()) {
+        console.log('pattern: ', pattern, pattern.test(content));
+        console.log('mentionSelf: ', mentionSelf);
+        if (mentionSelf) {
             if (pattern.test(content)) {
                 if (autoReply) {
                     const agentcraftResponse = await reply(content);
@@ -67,7 +70,7 @@ async function onMessage(msg) {
             contact.say(agentcraftResponse || '收到信息，但系统未做回答');
         }
     } else {
-        console.log('Other message, skip');
+        console.log('Other message, skip: ', content);
         // sendWs(s({ event: 'info', from: '公众号', message: `${msg.payload.text}`, title: msg.payload.filename, type: 'public' }));
     }
 }
