@@ -1,18 +1,32 @@
 {
-  "name": "ac-ws-server",
+  "name": "wechaty-agentcraft",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node websocker-server.js",
+    "start": "nodemon main.js",
     "lint": "next lint"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json",
+      "views/*",
+      "public/*"
+    ]
   },
   "dependencies": {
     "axios": "^1.5.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "qrcode-terminal": "^0.12.0",
     "wechaty": "^1.20.2",
     "wechaty-puppet-wechat": "^1.18.4",
     "ws": "^8.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
